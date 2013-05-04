@@ -90,7 +90,7 @@ app.configure "development", () ->
     showStack: true
 
 # default routes
-app.get "/", config.defaults, scripts.embed, nav.render, main_controllers.get.home
+app.get "/", scripts.embed, nav.render, main_controllers.get.home
 
 # auth routes
 app.get "/login", scripts.embed, nav.render, auth_controllers.get.login
@@ -100,7 +100,7 @@ app.post "/login",
     failureFlash: false
   (req, res, done) -> 
     return res.redirect "/"
-app.get "/logout", config.defaults, pass.ensureAuthenticated, auth_controllers.get.logout
+app.get "/logout", pass.ensureAuthenticated, auth_controllers.get.logout
 
 # passport-facebook routes
 app.get "/auth/facebook", passport.authenticate("facebook"), (req, res) ->
@@ -108,17 +108,21 @@ app.get "/auth/facebook/callback", passport.authenticate("facebook", failureRedi
   res.redirect "/"
 
 # chat routes
-app.get "/a/chat", config.defaults, pass.ensureAuthenticated, scripts.embed, nav.render, chat_controllers.get.public
-app.get "/secret-society/chat", config.defaults, pass.ensureAuthenticated, pass.ensureAdmin, scripts.embed, nav.render, chat_controllers.get.private
+app.get "/a/chat", pass.ensureAuthenticated, scripts.embed, nav.render, chat_controllers.get.public
+app.get "/secret-society/chat", pass.ensureAuthenticated, pass.ensureAdmin, scripts.embed, nav.render, chat_controllers.get.private
 
 # user routes
-app.get "/register", config.defaults, scripts.embed, nav.render, users_controllers.get.register
+app.get "/register", scripts.embed, nav.render, users_controllers.get.register
 app.post "/register", users_validate.register, users_middle.Create, users_controllers.post.register
-app.get "/users/edit", pass.ensureAuthenticated, config.defaults, scripts.embed, nav.render, users_middle.FindSelf, users_controllers.get.userEdit
-app.post "/users/edit", pass.ensureAuthenticated, users_middle.Update, users_controllers.post.userEdit
-app.get "/users/view", config.defaults, nav.render, scripts.embed, pass.ensureAuthenticated, users_middle.FindAll, users_controllers.get.view
-app.get "/users/:user/uplift", pass.ensureAuthenticated, pass.ensureAdmin, users_middle.FindByParam, users_controllers.get.uplift
-
+app.get "/users/add", pass.ensureAuthenticated, nav.render, scripts.embed, pass.ensureAdmin, users_controllers.get.make
+app.post "/users/add", pass.ensureAuthenticated, pass.ensureAdmin, users_validate.register, users_middle.Create, users_controllers.post.make
+app.get "/users/view", pass.ensureAuthenticated, nav.render, scripts.embed, users_middle.FindAll, users_controllers.get.view
+app.get "/users/edit", pass.ensureAuthenticated, scripts.embed, nav.render, users_middle.FindSelf, users_controllers.get.userEdit
+app.post "/users/edit", pass.ensureAuthenticated, users_validate.register, users_middle.Update, users_controllers.post.userEdit
+app.get "/users/:user/remove", pass.ensureAuthenticated, pass.ensureAdmin, users_controllers.get.remove
+app.get "/users/:user/edit", pass.ensureAuthenticated, pass.ensureAdmin, users_middle.FindByParam, nav.render, scripts.embed, users_controllers.get.edit
+app.post "/users/:user/edit", pass.ensureAuthenticated, pass.ensureAdmin, users_validate.register, users_middle.Update, users_controllers.post.edit
+app.get "/users/:user/uplift", pass.ensureAuthenticated, pass.ensureAdmin, nav.render, scripts.embed, users_middle.FindByParam, users_controllers.get.uplift
 
 # api routes
 app.get "/api/users/view", pass.ensureAuthenticated, pass.ensureAdmin, users_middle.FindAll, users_controllers.get.json

@@ -3,11 +3,21 @@ users = module.exports =
   get:
     register: (req, res) ->
       res.render 'pages/register',
-        app: req.Config
+        user: req.user
         title: "Register Page"
         nav: req.Navigation
         embed: req.Embed
         flash: req.flash "info"
+        submit: "Register"
+
+    make: (req, res) ->
+      res.render "pages/register",
+        title: "Make an account"
+        flash: req.flash "info"
+        user: req.user
+        submit: "Create User"
+        nav: req.Navigation
+        embed: req.Embed
 
     uplift: (req, res) ->
       User.update username: req.params.user, admin: true, (err) ->
@@ -16,6 +26,12 @@ users = module.exports =
           res.redirect "back"
         else
           req.flash "info", type: "error", title: "Oh Snap!", msg: "Oh, sorry no admin for you apparently :("
+          res.redirect "back"
+
+    remove: (req, res) ->
+      User.remove
+        username: req.params.user, (err) ->
+          return err if err
           res.redirect "back"
 
     edit: (req, res) ->
@@ -43,7 +59,7 @@ users = module.exports =
 
     view: (req, res) ->
       res.render "pages/view",
-        app: req.Config
+        user: req.user
         title: "View Users"
         users: req.findAll
         flash: req.flash "info"

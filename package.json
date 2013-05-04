@@ -2,7 +2,7 @@
   "name": "rwi-chat",
   "description": "sockjs chat for express and nodejs",
   "private": true,
-  "version": "0.3.5-22",
+  "version": "0.3.5-23",
   "license": "MIT",
   "subdomain": "rwi-chat",
   "author": "David Higginbotham <david@hillsoft.com>",

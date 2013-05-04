@@ -4,6 +4,7 @@ NavLoader = module.exports =
       {std : null, id : 'welcome', icon : 'home', cur : null, href : '/', token : null}
       {std : 'Logout', id : 'logout', icon : null, cur : null, href : '/logout', token : null}
       {std : 'Chat', id : 'chat', icon : null, cur : null, href : '/a/chat', token : null}
+      {std : 'Account', id : 'account', icon : null, cur : null, href : '/users/edit', token : null}
     ]
 
     noauth: [
@@ -16,6 +17,7 @@ NavLoader = module.exports =
       {std : null, id : 'welcome', icon : 'home', cur : null, href : '/', token : null}
       {std : 'Chat', id : 'chat', icon : null, cur : null, href : '/a/chat', token : null}
       {std : 'Secret Society', id : 'ss-chat', icon : null, cur : null, href : '/secret-society/chat', token : null}
+      {std : 'Accounts', id : 'accounts', icon : null, cur : null, href : '/users/view', token : null}
       {std : 'Logout', id : 'logout', icon : null, cur : null, href : '/logout', token : null}
     ]
 

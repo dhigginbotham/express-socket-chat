@@ -2,7 +2,7 @@
 
 {{#edit}}
 
-<div class="container">
+<div class="container container-top">
   <div class="row">
     
     <div class="span3">
@@ -54,9 +54,9 @@
           <p class="help-block"></p>
         </div>
       </div>
-      {{#app.user.admin}}
-        <label class="checkbox inline"><input type="checkbox" name="is_admin" {{#app.user.admin}} checked{{/app.user.admin}}> Make user an admin?</label>
-      {{/app.user.admin}}
+      {{#user.admin}}
+        <label class="checkbox inline"><input type="checkbox" name="is_admin" {{#admin}} checked{{/admin}}> Make user an admin?</label>
+      {{/user.admin}}
       <div class="form-actions">
         <button class="btn btn-large btn-inverse" type="submit">Update Account</button>
       </div>

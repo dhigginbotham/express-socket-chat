@@ -1,5 +1,5 @@
 {{> parts/nav}}
-<div class="container">
+<div class="container container-top">
   <legend>
     View Users
   </legend>
@@ -13,15 +13,15 @@
     <tbody>
       <tr>
         <td>
-          {{^app.user.admin}}<a href="/users/{{username}}/edit" class="btn btn-primary btn-small">Edit my account</a>{{/app.user.admin}}
-          {{#app.user.admin}}<a href="/users/{{username}}/edit" class="btn btn-primary btn-small">Edit</a>{{/app.user.admin}}
-          {{#app.user.admin}}<a href="/users/{{username}}/remove" class="btn btn-danger btn-small pull-right">Remove</a>{{/app.user.admin}}
-          {{#app.user.admin}}&nbsp;<a href="/users/{{username}}/uplift" class="btn btn-info btn-small">Promote {{username}}</a>{{/app.user.admin}}
+          {{^user.admin}}<a href="/users/{{username}}/edit" class="btn btn-primary btn-small">Edit my account</a>{{/user.admin}}
+          {{#user.admin}}<a href="/users/{{username}}/edit" class="btn btn-primary btn-small">Edit</a>{{/user.admin}}
+          {{#user.admin}}<a href="/users/{{username}}/remove" class="btn btn-danger btn-small pull-right">Remove</a>{{/user.admin}}
+          {{#user.admin}}&nbsp;<a href="/users/{{username}}/uplift" class="btn btn-info btn-small">Promote {{username}}</a>{{/user.admin}}
         </td>
       </tr>
     </tbody>
   </table>
   <br>
   {{/users}}
-  {{#app.user.admin}}<a href="add" class="btn btn-mini">Create</a> <a href="/api/users/view" class="btn btn-primary btn-mini">Switch to JSON View</a> {{/app.user.admin}}
+  {{#user.admin}}<a href="add" class="btn btn-mini">Create</a> <a href="/api/users/view" class="btn btn-primary btn-mini">Switch to JSON View</a> {{/user.admin}}
 </div>

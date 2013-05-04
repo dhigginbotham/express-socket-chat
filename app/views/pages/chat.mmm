@@ -1,39 +1,34 @@
 {{>parts/nav}}
-<div class="container">
-  <p>Welcome to the chatbox, keep it clean in here.</p>
-  <hr>
-</div>
-<div class="container">
+<div class="container container-top">
+  <legend>{{title}}</legend>
   
   <div class="row">
     <div class="span12">
-      <div id="conversation" style="overflow-y: auto; height: 500px;"></div>
+      <div id="conversation" style="overflow-y: auto; height: 500px; margin-bottom: 20px; border-bottom: 1px solid #e5e5e5"></div>
     </div>
   </div>
 
-    <div class="row">
-      <div class="span10">
-        <input type="text" id="data" class="input span10" />
-      </div>
-      <div class="span2">
-        <input class="btn btn-primary btn-block" type="button" id="datasend" value="send" />
-      </div>
+  <div class="row">
+    <div class="span10">
+      <input type="text" id="data" class="input span10" />
     </div>
+    <div class="span2">
+      <input class="btn btn-primary btn-block" type="button" id="datasend" value="send" />
+    </div>
+  </div>
 
-    <div class="row">
-      <div class="span12">
-        <div class="well well-small">
-          <p>
-            <div id="users"></div>
-          </p>
-        </div>
-      </div> 
-    </div>
+  <div class="row">
+    <div class="span12">
+      <div class="well well-small">
+        <div id="users"></div>
+      </div>
+    </div> 
+  </div>
 
 </div>
 <script src="/js/emojify.min.js"></script>
 <script>
   var getUser = function () {
-    return "{{app.user.username}}"
+    return "{{user.username}}"
   };
 </script>

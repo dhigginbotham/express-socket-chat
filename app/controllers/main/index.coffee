@@ -2,7 +2,7 @@ main = module.exports =
   get:
     home: (req, res, next) ->
       res.render 'pages/home',
-        app: req.Config
+        user: req.user
         nav: req.Navigation
         title: "Login Page"
         embed: req.Embed
