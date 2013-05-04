@@ -57,6 +57,7 @@ app.configure () ->
   app.set "view engine", "mmm"
   app.set "layout", "layout"
   app.use express.compress()
+  app.use express.favicon()
   app.use express.logger "dev"
   app.use express.bodyParser()
   app.use express.methodOverride()
@@ -89,9 +90,9 @@ app.configure "development", () ->
     showStack: true
 
 # default routes
-app.get "/", scripts.embed, nav.render, main_controllers.get.home
+app.get "/", config.defaults, scripts.embed, nav.render, main_controllers.get.home
 
-# user routes
+# auth routes
 app.get "/login", scripts.embed, nav.render, auth_controllers.get.login
 app.post "/login",
   passport.authenticate "local",
@@ -99,19 +100,28 @@ app.post "/login",
     failureFlash: false
   (req, res, done) -> 
     return res.redirect "/"
-
-app.get "/a/chat", pass.ensureAuthenticated, scripts.embed, nav.render, chat_controllers.get.public
-app.get "/secret-society/chat", pass.ensureAuthenticated, pass.ensureAdmin, scripts.embed, nav.render, chat_controllers.get.private
-
-app.get "/logout", pass.ensureAuthenticated, auth_controllers.get.logout
-app.get "/register", scripts.embed, nav.render, users_controllers.get.register
-
-app.post "/register", users_validate.register, users_middle.Create, users_controllers.post.register
+app.get "/logout", config.defaults, pass.ensureAuthenticated, auth_controllers.get.logout
 
 # passport-facebook routes
 app.get "/auth/facebook", passport.authenticate("facebook"), (req, res) ->
 app.get "/auth/facebook/callback", passport.authenticate("facebook", failureRedirect: "/login"), (req, res) ->
   res.redirect "/"
+
+# chat routes
+app.get "/a/chat", config.defaults, pass.ensureAuthenticated, scripts.embed, nav.render, chat_controllers.get.public
+app.get "/secret-society/chat", config.defaults, pass.ensureAuthenticated, pass.ensureAdmin, scripts.embed, nav.render, chat_controllers.get.private
+
+# user routes
+app.get "/register", config.defaults, scripts.embed, nav.render, users_controllers.get.register
+app.post "/register", users_validate.register, users_middle.Create, users_controllers.post.register
+app.get "/users/edit", pass.ensureAuthenticated, config.defaults, scripts.embed, nav.render, users_middle.FindSelf, users_controllers.get.userEdit
+app.post "/users/edit", pass.ensureAuthenticated, users_middle.Update, users_controllers.post.userEdit
+app.get "/users/view", config.defaults, nav.render, scripts.embed, pass.ensureAuthenticated, users_middle.FindAll, users_controllers.get.view
+app.get "/users/:user/uplift", pass.ensureAuthenticated, pass.ensureAdmin, users_middle.FindByParam, users_controllers.get.uplift
+
+
+# api routes
+app.get "/api/users/view", pass.ensureAuthenticated, pass.ensureAdmin, users_middle.FindAll, users_controllers.get.json
 
 usernames = {}
 pUsernames = {}
@@ -119,40 +129,42 @@ pUsernames = {}
 priv = io
   .of("/priv")
   .on "connection", (socket) ->
+    priv.emit "updateusers", pUsernames
 
     socket.on "sendchat", (data) ->
+      priv.emit "updateusers", pUsernames
       if data.length > 1 && data.length < 600
         priv.emit "updatechat", socket.username, data
 
-    .on "adduser", (username) ->
-      console.log pUsernames
+    socket.on "adduser", (username) ->
       if username == pUsernames[username] || !username
         delete pUsernames[socket.username]
       socket.username = username
       pUsernames[username] = username
       priv.emit "updateusers", pUsernames
 
-    .on "disconnect", () ->
+    socket.on "disconnect", () ->
       delete pUsernames[socket.username]
       priv.emit "updateusers", pUsernames
 
 pub = io
   .of("/pub")
   .on "connection", (socket) ->
+    pub.emit "updateusers", usernames
 
     socket.on "sendchat", (data) ->
+      pub.emit "updateusers", usernames
       if data.length > 1 && data.length < 600
         pub.emit "updatechat", socket.username, data
 
-    .on "adduser", (username) ->
-      console.log usernames
+    socket.on "adduser", (username) ->
       if username == usernames[username] || !username
         delete usernames[socket.username]
       socket.username = username
       usernames[username] = username
       pub.emit "updateusers", usernames
 
-    .on "disconnect",() ->
+    socket.on "disconnect",() ->
       delete usernames[socket.username]
       pub.emit "updateusers", usernames
 

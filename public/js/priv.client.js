@@ -13,16 +13,15 @@ priv.on('connect', function(){
 // listener, whenever the server emits 'updatechat', this updates the chat body
 priv.on('updatechat', function (username, data) {
   var date = new Date();
-  var urls = ScriptsClass.replaceURLWithHTMLLinks(data);
+  var body = ScriptsClass.replaceURLWithHTMLLinks(data);
+  $('#conversation').append(ScriptsClass.formatAMPM(date) + ' - <b style="color: #0044cc;">' + username + ':</b> ' + body + '<br>\r\n');
   emojify.run();
-  $('#conversation').append(ScriptsClass.formatAMPM(date) + ' - <b style="color: #0044cc;">' + username + ':</b> ' + urls + '<br>\r\n');
+  HandleScrollBar.scrollToBottom();
 });
 
 // listener, whenever the server emits 'updateusers', this updates the username list
 priv.on('updateusers', function(data) {
   $('#users').empty();
-  var count = $('#users').length;
-  $('#users').append('<span class="muted">Total Users: ' + count + '</span><br />');
   $.each(data, function(key, value) {
     if (key == 'admin') {
       $('#users').append('<span class="badge badge-important">' + key + '</span>&nbsp;');

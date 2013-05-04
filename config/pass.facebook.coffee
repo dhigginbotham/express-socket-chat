@@ -30,8 +30,7 @@ passport.use new FacebookStrategy
         User.update username: profile._json.username, updateUser, (err) ->
           if err
             return done err, null 
-
-          process.nextTick () ->
+          else
             return done null, user
       else
         user = new User

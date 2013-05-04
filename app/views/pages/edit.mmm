@@ -1,0 +1,71 @@
+{{>parts/nav}}
+
+{{#edit}}
+
+<div class="container">
+  <div class="row">
+    
+    <div class="span3">
+      {{! sidebar }}
+    </div>
+
+    <form class="span9" method="post" id="register-form">
+      <legend>Edit Account</legend>
+
+      <div class="control-group">
+        <label for="username" class="control-label">Username</label>
+        <div class="controls">
+          <input type="text" class="input input-block-level" id="username" name="username" required{{#username}} value="{{username}}" {{/username}}/>
+          <p class="help-block"></p>
+        </div>
+      </div>
+    {{!   <div class="control-group">
+            <label for="password" class="control-label">Password</label>
+            <div class="controls">
+              <input type="password" class="input input-block-level" id="password" name="password" required />
+              <p class="help-block"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="pass2" class="control-label">Verify Password</label>
+            <div class="controls">
+              <input type="password" class="input input-block-level" id="pass2" name="pass2" data-validation-match-match="password" required />
+              <p class="help-block"></p>
+            </div>
+          </div> }}
+      <div class="control-group">
+        <label for="email" class="control-label">Email</label>
+        <div class="controls">
+          <input type="email" class="input input-block-level" id="email" name="email" required{{#email}} value="{{email}}" {{/email}} />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="first_name" class="control-label">First Name</label>
+        <div class="controls">
+          <input type="text" class="input input-block-level" id="first_name" name="first_name"{{#first_name}} value="{{first_name}}" {{/first_name}} />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="last_name" class="control-label">Last Name</label>
+        <div class="controls">
+          <input type="text" class="input input-block-level" id="last_name" name="last_name"{{#last_name}} value="{{last_name}}" {{/last_name}} />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      {{#app.user.admin}}
+        <label class="checkbox inline"><input type="checkbox" name="is_admin" {{#app.user.admin}} checked{{/app.user.admin}}> Make user an admin?</label>
+      {{/app.user.admin}}
+      <div class="form-actions">
+        <button class="btn btn-large btn-inverse" type="submit">Update Account</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script>
+  $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+</script>
+{{/edit}}

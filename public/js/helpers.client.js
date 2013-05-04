@@ -78,5 +78,3 @@ var HelperClass = (function() {
     }
   }
 })();
-
-HelperClass.LoadEmoji();

@@ -10,7 +10,8 @@ scripts = module.exports =
     {src: '/js/jquery.jqBootstrapValidation.js', name: 'jquery.jqBootstrapValidation.js', where: 'head', uri: null, type: 'js'}
     {src: '/js/helpers.client.js', name: 'helpers.client.js', where: 'foot', uri: null, type: 'js'}
     {src: '/js/scripts.client.js', name: 'scripts.client.js', where: 'foot', uri: null, type: 'js'}
-    {src: '/js/chatbox.client.js', name: 'chatbox.client.js', where: 'foot', uri: null, type: 'js'}
+    {src: '/js/chatbox.client.js', name: 'chatbox.client.js', where: 'foot', uri: '/a/chat', type: 'js'}
+    {src: '/js/chatbox.client.js', name: 'chatbox.client.js', where: 'foot', uri: '/secret-society/chat', type: 'js'}
     {src: '/js/priv.client.js', name: 'priv.client.js', where: 'foot', uri: '/secret-society/chat', type: 'js'}
     {src: '/js/pub.client.js', name: 'pub.client.js', where: 'foot', uri: '/a/chat', type: 'js'}
     {src: '/css/emojify.min.css', name: 'emojify.min.css', where: 'head', uri: '/a/chat', type: 'css'}

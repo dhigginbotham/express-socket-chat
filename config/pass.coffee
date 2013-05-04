@@ -5,21 +5,21 @@ User = require "../app/models/users"
 
 # slower, session based serializing
 
-passport.serializeUser (user, done) ->
-  done null, user.id
+# passport.serializeUser (user, done) ->
+#   done null, user.id
 
-passport.deserializeUser (id, done) ->
-  User.findById id, (err, user) ->
-    done err, user
+# passport.deserializeUser (id, done) ->
+#   User.findById id, (err, user) ->
+#     done err, user
 
 # this is for serializing/deserializing the 
 # user without db lookup... much faster.
 
-# passport.serializeUser (user, done) ->
-#   done null, user
+passport.serializeUser (user, done) ->
+  done null, user
 
-# passport.deserializeUser (obj, done) ->
-#   done null, obj
+passport.deserializeUser (obj, done) ->
+  done null, obj
 
 passport.use new LocalStrategy (username, password, done) ->
   User.findOne username: new RegExp(username, 'i'), (err, user) ->

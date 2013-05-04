@@ -34,7 +34,7 @@ UserSchema = new Schema
 UserSchema.pre "save", (next) ->
   user = this
 
-  if !user.isModified "password"
+  if user.token || !user.isModified "password"
     return next()
   else
     bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->

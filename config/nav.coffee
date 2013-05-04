@@ -1,18 +1,21 @@
 NavLoader = module.exports =
   types:
     auth: [
-      {std : null, id : 'welcome', icon : 'home', cur : null, href : '/', token : null},
+      {std : null, id : 'welcome', icon : 'home', cur : null, href : '/', token : null}
       {std : 'Logout', id : 'logout', icon : null, cur : null, href : '/logout', token : null}
+      {std : 'Chat', id : 'chat', icon : null, cur : null, href : '/a/chat', token : null}
     ]
 
     noauth: [
-      {std : null, id : 'home', icon : 'home', cur : null, href : '/', token : null},
-      {std : 'Login', id : 'login', icon : null, cur : null, href : '/login', token : null},
+      {std : null, id : 'home', icon : 'home', cur : null, href : '/', token : null}
+      {std : 'Login', id : 'login', icon : null, cur : null, href : '/login', token : null}
       {std : 'Register', id : 'register', icon : null, cur : null, href : '/register', token : null}
     ]
 
     admin: [
-      {std : null, id : 'welcome', icon : 'home', cur : null, href : '/', token : null},
+      {std : null, id : 'welcome', icon : 'home', cur : null, href : '/', token : null}
+      {std : 'Chat', id : 'chat', icon : null, cur : null, href : '/a/chat', token : null}
+      {std : 'Secret Society', id : 'ss-chat', icon : null, cur : null, href : '/secret-society/chat', token : null}
       {std : 'Logout', id : 'logout', icon : null, cur : null, href : '/logout', token : null}
     ]
 
@@ -21,7 +24,7 @@ NavLoader = module.exports =
     if !req.user
       nav = NavLoader.types.noauth
     else if req.user.admin is true
-      nav = NavLoader.types.auth
+      nav = NavLoader.types.admin
     else
       nav = NavLoader.types.auth
 
