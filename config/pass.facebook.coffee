@@ -4,12 +4,14 @@ FacebookStrategy = require("passport-facebook").Strategy
 # require user schema
 User = require "../app/models/users"
 
-if process.env.NODE_ENV == "development"
+if process.env.NODE_ENV
   FACEBOOK_APP_ID = "456946017732211"
   FACEBOOK_APP_SECRET = "47436dae949615733ac56357b5572d45"
 
 if process.env.NODE_ENV is "development"
   redirect_url = "http://localhost:3100"
+else
+  redirect_url = "http://rwi-chat.jit.su/"
 
 passport.use new FacebookStrategy
   clientID: FACEBOOK_APP_ID

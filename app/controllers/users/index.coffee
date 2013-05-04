@@ -2,7 +2,6 @@ users = module.exports =
   get:
     register: (req, res) ->
       res.render 'pages/register',
-        app: req.Config
         nav: req.Navigation
         title: "Register Page"
         embed: req.Embed

@@ -4,6 +4,12 @@ flash = require "connect-flash"
 server = require("http").createServer(app)
 io = require("socket.io").listen(server)
 
+# socket.io xdomain enforcement
+io.configure () ->
+  io.set "authorization", (handshakeData, callback) ->
+    if handshakeData.xdomain 
+      callback "Cross-domain connections are not allowed"
+    else callback null, true
 
 io.configure "production", () ->
   io.enable "browser client minification"
@@ -46,12 +52,12 @@ users_middle = require "./app/controllers/users/middle"
 
 # default configuration settings
 app.configure () ->
-  app.set "port", process.env.port || 3100
-  app.set "views", __dirname + "/app/views"
+  app.set "port", process.env.port
+  app.set "views", "./app/views"
   app.set "view engine", "mmm"
   app.set "layout", "layout"
   app.use express.compress()
-  app.use express.favicon()
+  app.use express.logger "dev"
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser()
@@ -60,11 +66,10 @@ app.configure () ->
     secret: "cookie-secret"
     cookie:
       maxAge: 60 * 60 * 1000
-  # passport stuff can go here
   app.use passport.initialize()
   app.use passport.session()
   app.use flash()
-  app.use config.defaults
+  # app.use config.defaults
   app.use app.router
   app.use express.static path.join __dirname, "public"
 
@@ -78,7 +83,7 @@ app.configure "production", () ->
   #     next()
 
 app.configure "development", () ->
-  app.use express.logger "dev"
+  app.set "port", 3100
   app.use express.errorHandler 
     dumpExceptions: true
     showStack: true

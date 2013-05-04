@@ -13,10 +13,8 @@ scripts = module.exports =
     {src: '/js/chatbox.client.js', name: 'chatbox.client.js', where: 'foot', uri: null, type: 'js'}
     {src: '/js/priv.client.js', name: 'priv.client.js', where: 'foot', uri: '/secret-society/chat', type: 'js'}
     {src: '/js/pub.client.js', name: 'pub.client.js', where: 'foot', uri: '/a/chat', type: 'js'}
-    {src: '/css/emojify.min.css', name: 'emojify.min.css', where: 'head', uri: null, type: 'css'}
-    # {src: '/js/emojify.min.js', name: 'emojify.min.js', where: 'head', uri: '/a/chat', type: 'js'}
-    # {src: '/css/emojify.min.css', name: 'emojify.min.css', where: 'head', uri: '/secret-society/chat', type: 'css'}
-    # {src: '/js/emojify.min.js', name: 'emojify.min.js', where: 'head', uri: '/secret-society/chat', type: 'js'}
+    {src: '/css/emojify.min.css', name: 'emojify.min.css', where: 'head', uri: '/a/chat', type: 'css'}
+    {src: '/css/emojify.min.css', name: 'emojify.min.css', where: 'head', uri: '/secret-society/chat', type: 'css'}
   ]
 
   embed: (req, res, next) ->

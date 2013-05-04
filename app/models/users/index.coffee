@@ -4,7 +4,7 @@ Schema = require("mongoose").Schema
 ObjectId = Schema.Types.ObjectId
 
 bcrypt = require "bcrypt"
-SALT_WORK_FACTOR = 20
+SALT_WORK_FACTOR = 10
 
 UserSchema = new Schema
   username:
@@ -34,7 +34,7 @@ UserSchema = new Schema
 UserSchema.pre "save", (next) ->
   user = this
 
-  if user.token || !user.isModified "password"
+  if !user.isModified "password"
     return next()
   else
     bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
@@ -55,7 +55,7 @@ UserSchema.methods.comparePassword = (candidatePassword, cb) ->
 
 User = module.exports = db.model "User", UserSchema
 
-if process.env.NODE_ENV == "development"
+if process.env.NODE_PASS
   db.once "open", () ->
     User.findOne 
       username: "admin", (err, docs) ->

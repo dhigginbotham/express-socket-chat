@@ -32,7 +32,6 @@ _users = module.exports =
   Create: (req, res, next) ->
     if !req.form.isValid
       req.flash "info", type: "error", title: "Oh Snap!", msg: req.form.errors
-      next()
 
     user = new User
       username: req.body.username        
@@ -42,10 +41,10 @@ _users = module.exports =
       email: req.body.email
       admin: false
 
-    user.save (err, user) ->
+    user.save (err) ->
       if err
         req.flash "info", type: "error", title: "Oh Snap!", msg: "wasn't able to create"
-        next()
-      if user
+        return next()
+      else
         req.flash "info", type: "success", title: "Sweet!", msg: "You've been updated"
-        next()
+        return next()
