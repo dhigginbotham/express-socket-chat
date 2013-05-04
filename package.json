@@ -1,0 +1,30 @@
+{
+  "name": "rwi-chat",
+  "description": "sockjs chat for express and nodejs",
+  "private": true,
+  "version": "0.3.5",
+  "license": "MIT",
+  "subdomain": "rwi-chat",
+  "author": "David Higginbotham <david@hillsoft.com>",
+  "dependencies": {
+    "express": "3.0.3",
+    "mmm": "0.2.x",
+    "mongoose": "3.6.x",
+    "socket.io": "0.9.x",
+    "express-form": "0.8.x",
+    "connect-flash": "0.1.0",
+    "passport": "0.1.x",
+    "passport-local": "0.1.6",
+    "passport-facebook": ">= 0.0.0",
+    "bcrypt": "0.7.5"
+  },
+  "devDependencies": {
+    "coffee-script": ">= 1.3.3"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "start": "coffee server.coffee"
+  }
+}

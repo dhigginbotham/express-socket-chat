@@ -1,0 +1,16 @@
+{{>parts/nav}}
+
+
+<div class="container">
+  
+  <form class="form-signin" method="post">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="username">Username</label>
+    <input type="text" class="input-block-level" name="username" id="username">
+    <label for="password">Password</label>
+    <input type="password" class="input-block-level" name="password" id="password">
+    <p><button class="btn btn-large btn-block btn-info" type="submit">Sign in</button></p>
+    <p><a href="/auth/facebook" class="btn btn-large btn-block btn-primary"><i class="icon-facebook"></i> Login with Facebook</a></p>
+  </form>
+
+</div>

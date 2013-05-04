@@ -1,0 +1,7 @@
+<!-- //header-scripts.html -->
+{{#embed.head.js}}
+<script src="{{src}}"></script><!-- ^- {{name}} -->
+{{/embed.head.js}}
+{{#embed.head.css}}
+<link href="{{src}}" rel="stylesheet"><!-- ^- {{name}} -->
+{{/embed.head.css}}

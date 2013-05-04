@@ -1,0 +1,66 @@
+{{>parts/nav}}
+
+
+<div class="container">
+  <div class="row">
+    
+    <div class="span3">
+      {{! sidebar }}
+    </div>
+
+    <form class="span9" method="post" id="register-form">
+      <legend>Register Form</legend>
+
+      <div class="control-group">
+        <label for="username" class="control-label">Username</label>
+        <div class="controls">
+          <input type="text" class="input input-block-level" id="username" name="username" required />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="password" class="control-label">Password</label>
+        <div class="controls">
+          <input type="password" class="input input-block-level" id="password" name="password" required />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="pass2" class="control-label">Verify Password</label>
+        <div class="controls">
+          <input type="password" class="input input-block-level" id="pass2" name="pass2" data-validation-match-match="password" required />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="email" class="control-label">Email</label>
+        <div class="controls">
+          <input type="email" class="input input-block-level" id="email" name="email" required />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="first_name" class="control-label">First Name</label>
+        <div class="controls">
+          <input type="text" class="input input-block-level" id="first_name" name="first_name" />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="last_name" class="control-label">Last Name</label>
+        <div class="controls">
+          <input type="text" class="input input-block-level" id="last_name" name="last_name" />
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-large btn-inverse" type="submit">Register</button> <a href="/auth/facebook" class="btn btn-large btn-primary"><i class="icon-facebook"></i> Login with Facebook</a>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script>
+  $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+</script>

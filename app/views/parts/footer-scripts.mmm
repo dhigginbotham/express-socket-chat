@@ -1,0 +1,8 @@
+<!-- //footer-scripts.html -->
+{{#embed.foot.js}}
+<script src="{{src}}"></script><!-- ^- {{name}} -->
+{{/embed.foot.js}}
+{{#embed.foot.css}}
+<link href="{{src}}" rel="stylesheet"><!-- ^- {{name}} -->
+{{/embed.foot.css}}
+ 
