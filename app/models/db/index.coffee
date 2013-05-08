@@ -1,6 +1,4 @@
 mongoose = require "mongoose"
-
-# debug setting for development
 mongoose.set "debug", true if process.env.NODE_ENV == "development"
 
 DB_CONNECTION_STRING = process.env.DB_STRING || "mongodb://localhost/chat"

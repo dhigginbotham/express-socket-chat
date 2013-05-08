@@ -1,0 +1,26 @@
+{{> parts/nav}}
+<div class="container container-top">
+  <legend>
+    Chat History
+  </legend>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th colspan="3">
+          {{roomtitle}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#chats}}
+      <tr>
+        <td style="width: 10%;">{{time}}</td>
+        <td style="width: 10%;"><i class="icon-user"></i> {{who}}</td>
+        <td>{{message}}</td>
+      </tr>
+    {{/chats}}
+    </tbody>
+  </table>
+  {{>parts/paging}}
+  <br>
+</div>

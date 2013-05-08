@@ -77,3 +77,6 @@ users = module.exports =
 
     userEdit: (req, res) ->
       res.redirect "back"
+
+    make: (req, res) ->
+      res.redirect "back"

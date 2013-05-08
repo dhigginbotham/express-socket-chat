@@ -49,6 +49,7 @@ users_validate = require "./app/models/users/validate"
 # route middleware
 auth_middle = require "./app/controllers/auth/middle"
 users_middle = require "./app/controllers/users/middle"
+chat_middle = require "./app/controllers/chat/middle"
 
 # default configuration settings
 app.configure () ->
@@ -99,17 +100,21 @@ app.post "/login",
     failureRedirect: "/login#failed-login" 
     failureFlash: false
   (req, res, done) -> 
-    return res.redirect "/"
+    res.redirect "/a/chat"
 app.get "/logout", pass.ensureAuthenticated, auth_controllers.get.logout
 
 # passport-facebook routes
 app.get "/auth/facebook", passport.authenticate("facebook"), (req, res) ->
 app.get "/auth/facebook/callback", passport.authenticate("facebook", failureRedirect: "/login"), (req, res) ->
-  res.redirect "/"
+  res.redirect req.get "Referer"
 
 # chat routes
 app.get "/a/chat", pass.ensureAuthenticated, scripts.embed, nav.render, chat_controllers.get.public
-app.get "/secret-society/chat", pass.ensureAuthenticated, pass.ensureAdmin, scripts.embed, nav.render, chat_controllers.get.private
+app.get "/a/history/:page", pass.ensureAuthenticated, scripts.embed, nav.render, chat_middle.FindPublicChatHistory, chat_controllers.get.history
+
+# ss routes
+app.get "/secret-society/chat", pass.ensureAuthenticated, pass.ensureAdmin, scripts.embed, nav.render, chat_middle.FindPrivateChatHistory, chat_controllers.get.private
+app.get "/secret-society/history/:page", pass.ensureAuthenticated, pass.ensureAdmin, scripts.embed, nav.render, chat_middle.FindPrivateChatHistory, chat_controllers.get.PrivateHistory
 
 # user routes
 app.get "/register", scripts.embed, nav.render, users_controllers.get.register
@@ -130,6 +135,8 @@ app.get "/api/users/view", pass.ensureAuthenticated, pass.ensureAdmin, users_mid
 usernames = {}
 pUsernames = {}
 
+Chat = require "./app/models/chat"
+
 priv = io
   .of("/priv")
   .on "connection", (socket) ->
@@ -138,7 +145,14 @@ priv = io
     socket.on "sendchat", (data) ->
       priv.emit "updateusers", pUsernames
       if data.length > 1 && data.length < 600
-        priv.emit "updatechat", socket.username, data
+        chat = new Chat
+          who: socket.username
+          message: data
+          ip: socket.handshake.address.address
+          room: "priv"
+
+        Chat.create chat, (err, chat) ->
+          priv.emit "updatechat", socket.username, data
 
     socket.on "adduser", (username) ->
       if username == pUsernames[username] || !username
@@ -158,8 +172,16 @@ pub = io
 
     socket.on "sendchat", (data) ->
       pub.emit "updateusers", usernames
+
       if data.length > 1 && data.length < 600
-        pub.emit "updatechat", socket.username, data
+        chat = new Chat
+          who: socket.username
+          message: data
+          ip: socket.handshake.address.address
+          room: "pub"
+
+        Chat.create chat, (err, chat) ->
+          pub.emit "updatechat", socket.username, data
 
     socket.on "adduser", (username) ->
       if username == usernames[username] || !username

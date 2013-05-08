@@ -10,6 +10,7 @@ scripts = module.exports =
     {src: '/js/jquery.jqBootstrapValidation.js', name: 'jquery.jqBootstrapValidation.js', where: 'head', uri: null, type: 'js'}
     {src: '/js/helpers.client.js', name: 'helpers.client.js', where: 'foot', uri: null, type: 'js'}
     {src: '/js/scripts.client.js', name: 'scripts.client.js', where: 'foot', uri: null, type: 'js'}
+    {src: '/js/nicEdit.js', name: 'nicEdit.js', where: 'head', uri: '/a/chat', type: 'js'}
     {src: '/js/chatbox.client.js', name: 'chatbox.client.js', where: 'foot', uri: '/a/chat', type: 'js'}
     {src: '/js/chatbox.client.js', name: 'chatbox.client.js', where: 'foot', uri: '/secret-society/chat', type: 'js'}
     {src: '/js/priv.client.js', name: 'priv.client.js', where: 'foot', uri: '/secret-society/chat', type: 'js'}
@@ -20,8 +21,15 @@ scripts = module.exports =
 
   embed: (req, res, next) ->
 
-    script = scripts.items
+    # colors, thanks to the colors module library
+    # i didn't feel the need for a dependency only 
+    # development - so thank you, in advance
+    red = '\x1B[31m'
+    cyan = '\x1B[36m'
+    reset = '\x1B[39m'
 
+    script = scripts.items
+    
     Object.create embed =
       head:
         js: []
@@ -33,8 +41,9 @@ scripts = module.exports =
     for ctx in script
       do (ctx) ->
         if embed.head[ctx.type] || embed.foot[ctx.type]
-          if ctx.uri == req.route.path || ctx.uri == null
-            console.log "pushing #{ctx.name} into #{ctx.where}er" if process.env.NODE_ENV is "development"
+          console.log "#{red}Excluding:#{reset} #{ctx.name}" if ctx.exclude == req.route.path and process.env.NODE_ENV is "development"
+          if ( ctx.uri == req.route.path || ctx.uri == null ) and ctx.exclude != req.route.path
+            console.log "#{cyan}Including:#{reset} #{ctx.name} into #{ctx.where}er" if process.env.NODE_ENV is "development"
             embed[ctx.where][ctx.type].push ctx
 
     process.nextTick () ->

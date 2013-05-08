@@ -14,7 +14,7 @@ pub.on('connect', function(){
 pub.on('updatechat', function (username, data) {
   var date = new Date();
   var body = ScriptsClass.replaceURLWithHTMLLinks(data);
-  $('#conversation').append(ScriptsClass.formatAMPM(date) + ' - <b style="color: #0044cc;">' + username + ':</b> ' + body + '<br>\r\n');
+  $('#conversation').append('<div>' + ScriptsClass.formatAMPM(date) + ' - <b style="color: #0044cc;">' + username + ':</b> ' + body + '</div>\r\n');
   emojify.run();
   HandleScrollBar.scrollToBottom();
 });

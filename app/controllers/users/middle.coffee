@@ -3,7 +3,7 @@ User = require "../../models/users"
 users = module.exports =
   Update: (req, res, next) ->
 
-    if req.user || req.url =="/users/edit"
+    if req.url == "/users/edit"
       query = req.user.username
     else
       query = req.params.user
@@ -32,7 +32,6 @@ users = module.exports =
 
   Create: (req, res, next) ->
     User.findOne username: req.body.username, (err, usr) ->
-      return next() if err
       if !usr
         user = new User
           username: req.body.username        
