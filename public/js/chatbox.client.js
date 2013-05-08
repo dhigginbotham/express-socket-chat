@@ -7,7 +7,6 @@ var HandleScrollBar = (function() {
     },
     init: function () {
       s = this.settings;
-      // HandleScrollBar.scrollToBottom();
     },
     scrollToBottom: function () {
       s.chatHeight = s.chat[0].scrollHeight - s.chat.height();
@@ -17,7 +16,7 @@ var HandleScrollBar = (function() {
         console.log(s.currentScroll);
         s.chat[0].scrollTop = s.currentScroll;
       } else {
-        s.chat.stop().animate({ scrollTop: s.chat[0].scrollHeight }, 800);
+        s.chat.animate({ scrollTop: s.chat[0].scrollHeight }, 800);
       }
     }
   }
